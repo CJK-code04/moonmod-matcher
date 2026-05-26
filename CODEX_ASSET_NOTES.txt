@@ -1,17 +1,1 @@
-MoonMod Matcher project
-
-Assets staan nu uitgepakt op de juiste plek:
-
-public/assets/dials
-public/assets/bezels
-public/assets/cases
-public/assets/straps
-
-Dus niet meer als losse zip in public/assets.
-
-Voor Codex:
-- gebruik deze mappen als app-assets
-- dials zijn alleen de wijzerplaatlaag
-- bezels zijn de tachymeter/bezel-laag
-- cases zijn de kastlaag
-- straps zijn de bandlaag
+Assets replaced with app-proof v2 assets. Use public/assets/dials, bezels, cases, straps. All are 1254x1254 transparent PNGs. Stack layers at same center: strap -> case -> dial -> bezel.

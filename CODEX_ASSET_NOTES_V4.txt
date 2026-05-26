@@ -1,0 +1,1 @@
+Refined app-proof assets v4. Dials unchanged. Layer order: strap -> case -> dial -> bezel.
