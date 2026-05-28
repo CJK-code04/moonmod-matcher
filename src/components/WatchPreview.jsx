@@ -15,17 +15,32 @@ function assetSrc(part, folder) {
 const dimensions = {
   normal: {
     stage: 320,
-    strap: 728,
+    strap: 790,
     case: 210,
     dial: 158,
     bezel: 210
   },
   small: {
     stage: 220,
-    strap: 500,
+    strap: 545,
     case: 145,
     dial: 109,
     bezel: 145
+  }
+};
+
+const offsets = {
+  normal: {
+    strap: { x: 0, y: 0 },
+    case: { x: 0, y: 0 },
+    dial: { x: -4, y: -3 },
+    bezel: { x: -4, y: -3 }
+  },
+  small: {
+    strap: { x: 0, y: 0 },
+    case: { x: 0, y: 0 },
+    dial: { x: -3, y: -2 },
+    bezel: { x: -3, y: -2 }
   }
 };
 
@@ -40,7 +55,9 @@ function stageStyle(size) {
   };
 }
 
-function layerStyle(size, layer, zIndex) {
+function layerStyle(size, offsetSet, layer, zIndex) {
+  const offset = offsetSet[layer] || { x: 0, y: 0 };
+
   return {
     position: "absolute",
     top: "50%",
@@ -48,7 +65,7 @@ function layerStyle(size, layer, zIndex) {
     width: `${size[layer]}px`,
     height: `${size[layer]}px`,
     objectFit: "contain",
-    transform: "translate(-50%, -50%)",
+    transform: `translate(calc(-50% + ${offset.x}px), calc(-50% + ${offset.y}px))`,
     pointerEvents: "none",
     userSelect: "none",
     zIndex
@@ -56,7 +73,9 @@ function layerStyle(size, layer, zIndex) {
 }
 
 export default function WatchPreview({ combo, small = false }) {
-  const size = small ? dimensions.small : dimensions.normal;
+  const mode = small ? "small" : "normal";
+  const size = dimensions[mode];
+  const offsetSet = offsets[mode];
   const strapSrc = assetSrc(combo.strap, "straps");
   const caseSrc = assetSrc(combo.watchCase, "cases");
   const dialSrc = assetSrc(combo.moon, "dials");
@@ -65,10 +84,10 @@ export default function WatchPreview({ combo, small = false }) {
   return (
     <div className={`watch-preview ${small ? "watch-preview-small" : ""} ${backgroundClass(combo)}`}>
       <div className="watch-stack" style={stageStyle(size)} aria-label={`${combo.name} preview`}>
-        <img src={strapSrc} alt={`${combo.strap.name} laag`} draggable="false" style={layerStyle(size, "strap", 1)} />
-        <img src={caseSrc} alt={`${combo.watchCase.name} laag`} draggable="false" style={layerStyle(size, "case", 2)} />
-        <img src={dialSrc} alt={`${combo.moon.name} wijzerplaat`} draggable="false" style={layerStyle(size, "dial", 3)} />
-        <img src={bezelSrc} alt={`${combo.bezel.name} laag`} draggable="false" style={layerStyle(size, "bezel", 4)} />
+        <img src={strapSrc} alt={`${combo.strap.name} laag`} draggable="false" style={layerStyle(size, offsetSet, "strap", 1)} />
+        <img src={caseSrc} alt={`${combo.watchCase.name} laag`} draggable="false" style={layerStyle(size, offsetSet, "case", 2)} />
+        <img src={dialSrc} alt={`${combo.moon.name} wijzerplaat`} draggable="false" style={layerStyle(size, offsetSet, "dial", 3)} />
+        <img src={bezelSrc} alt={`${combo.bezel.name} laag`} draggable="false" style={layerStyle(size, offsetSet, "bezel", 4)} />
       </div>
     </div>
   );
