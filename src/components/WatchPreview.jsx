@@ -8,7 +8,8 @@ function backgroundClass(combo) {
 
 function assetSrc(part, folder) {
   if (!part?.id) return "";
-  return `/assets/${folder}/${part.id}.png`;
+  const baseUrl = import.meta.env.BASE_URL || "/";
+  return `${baseUrl}assets/${folder}/${part.id}.png`;
 }
 
 const stageStyle = {
