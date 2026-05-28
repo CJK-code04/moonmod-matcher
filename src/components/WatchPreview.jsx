@@ -45,16 +45,16 @@ const layerStyle = ({ size, zIndex, x = 0, y = 0 }) => ({
 
 const layerSizes = {
   regular: {
-    strap: { rubber: "790px", fabric: "790px", leather: "990px", steel: "1065px", zIndex: 1 },
+    strap: { rubber: "790px", fabric: "790px", leather: "925px", steel: "1065px", zIndex: 1 },
     case: { size: "210px", zIndex: 2 },
-    dial: { size: "166px", zIndex: 3 },
-    bezel: { size: "228px", zIndex: 4 }
+    dial: { size: "166px", x: -2, y: -1, zIndex: 3 },
+    bezel: { size: "232px", x: -2, y: -1, zIndex: 4 }
   },
   small: {
-    strap: { rubber: "545px", fabric: "545px", leather: "680px", steel: "735px", zIndex: 1 },
+    strap: { rubber: "545px", fabric: "545px", leather: "635px", steel: "735px", zIndex: 1 },
     case: { size: "145px", zIndex: 2 },
-    dial: { size: "115px", zIndex: 3 },
-    bezel: { size: "158px", zIndex: 4 }
+    dial: { size: "115px", x: -1, y: -1, zIndex: 3 },
+    bezel: { size: "160px", x: -1, y: -1, zIndex: 4 }
   }
 };
 
