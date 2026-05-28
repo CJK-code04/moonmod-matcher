@@ -15,16 +15,16 @@ function assetSrc(part, folder) {
 const dimensions = {
   normal: {
     stage: 320,
-    strap: 560,
+    strap: 728,
     case: 210,
-    dial: 160,
+    dial: 158,
     bezel: 210
   },
   small: {
     stage: 220,
-    strap: 385,
+    strap: 500,
     case: 145,
-    dial: 110,
+    dial: 109,
     bezel: 145
   }
 };
