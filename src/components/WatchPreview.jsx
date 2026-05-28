@@ -86,6 +86,10 @@ function correctedLayer(layer, correction) {
   return correction ? { ...layer, ...correction } : layer;
 }
 
+function correctedDial(layer, correction) {
+  return correction ? { ...layer, x: correction.x, y: correction.y } : layer;
+}
+
 export default function WatchPreview({ combo, small = false }) {
   const strapSrc = assetSrc(combo.strap, "straps");
   const caseSrc = assetSrc(combo.watchCase, "cases");
@@ -93,8 +97,9 @@ export default function WatchPreview({ combo, small = false }) {
   const bezelSrc = assetSrc(combo.bezel, "bezels");
   const mode = small ? "small" : "regular";
   const sizes = layerSizes[mode];
-  const bezelStyle = correctedLayer(sizes.bezel, bezelCorrections[mode][combo.bezel.id]);
-  const dialStyle = correctedLayer(sizes.dial, bezelCorrections[mode][combo.bezel.id]);
+  const bezelCorrection = bezelCorrections[mode][combo.bezel.id];
+  const bezelStyle = correctedLayer(sizes.bezel, bezelCorrection);
+  const dialStyle = correctedDial(sizes.dial, bezelCorrection);
   const strapStyle = {
     size: strapSizeFor(combo.strap, sizes),
     zIndex: sizes.strap.zIndex
