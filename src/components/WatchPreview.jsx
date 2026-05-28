@@ -58,6 +58,23 @@ const layerSizes = {
   }
 };
 
+const bezelCorrections = {
+  regular: {
+    bezel_steel: { size: "235px", x: -1, y: -1 },
+    bezel_black: { size: "236px", x: -3, y: -1 },
+    bezel_blue: { size: "235px", x: -3, y: -2 },
+    bezel_green: { size: "235px", x: -3, y: -2 },
+    bezel_red: { size: "235px", x: -3, y: -2 }
+  },
+  small: {
+    bezel_steel: { size: "162px", x: -1, y: -1 },
+    bezel_black: { size: "163px", x: -2, y: -1 },
+    bezel_blue: { size: "162px", x: -2, y: -1 },
+    bezel_green: { size: "162px", x: -2, y: -1 },
+    bezel_red: { size: "162px", x: -2, y: -1 }
+  }
+};
+
 function strapSizeFor(strap, sizes) {
   if (strap.material === "Staal") return sizes.strap.steel;
   if (strap.material === "Leer") return sizes.strap.leather;
@@ -65,12 +82,19 @@ function strapSizeFor(strap, sizes) {
   return sizes.strap.rubber;
 }
 
+function correctedLayer(layer, correction) {
+  return correction ? { ...layer, ...correction } : layer;
+}
+
 export default function WatchPreview({ combo, small = false }) {
   const strapSrc = assetSrc(combo.strap, "straps");
   const caseSrc = assetSrc(combo.watchCase, "cases");
   const dialSrc = assetSrc(combo.moon, "dials");
   const bezelSrc = assetSrc(combo.bezel, "bezels");
-  const sizes = small ? layerSizes.small : layerSizes.regular;
+  const mode = small ? "small" : "regular";
+  const sizes = layerSizes[mode];
+  const bezelStyle = correctedLayer(sizes.bezel, bezelCorrections[mode][combo.bezel.id]);
+  const dialStyle = correctedLayer(sizes.dial, bezelCorrections[mode][combo.bezel.id]);
   const strapStyle = {
     size: strapSizeFor(combo.strap, sizes),
     zIndex: sizes.strap.zIndex
@@ -81,8 +105,8 @@ export default function WatchPreview({ combo, small = false }) {
       <div className="watch-stack" style={small ? smallStageStyle : stageStyle} aria-label={`${combo.name} preview`}>
         <img src={strapSrc} alt={`${combo.strap.name} laag`} draggable="false" style={layerStyle(strapStyle)} />
         <img src={caseSrc} alt={`${combo.watchCase.name} laag`} draggable="false" style={layerStyle(sizes.case)} />
-        <img src={dialSrc} alt={`${combo.moon.name} wijzerplaat`} draggable="false" style={layerStyle(sizes.dial)} />
-        <img src={bezelSrc} alt={`${combo.bezel.name} laag`} draggable="false" style={layerStyle(sizes.bezel)} />
+        <img src={dialSrc} alt={`${combo.moon.name} wijzerplaat`} draggable="false" style={layerStyle(dialStyle)} />
+        <img src={bezelSrc} alt={`${combo.bezel.name} laag`} draggable="false" style={layerStyle(bezelStyle)} />
       </div>
     </div>
   );
